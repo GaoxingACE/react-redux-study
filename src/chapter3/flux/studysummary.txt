@@ -1,0 +1,29 @@
+基于Flux、React的计数组件案例分析
+1、Flux
+  <1>、从flux框架中引入Dispatcher 
+       import {Dispatcher} from 'flux';
+
+        export default new Dispatcher();
+   <2>、定义ActionType.js文件，指明action类型
+       export const INCREMENT ='increment';
+   <3>、定义Actions.js文件
+       根据action的type属性，定义不同的action构造函数
+        函数内容：由Dispatcher对象dipatch相应的action对象
+         export const increment=(counterCaption)=>
+        {
+	         AppDispatcher.dispatch({
+	              	type:ActionTypes.INCREMENT,
+	            	counterCaption:counterCaption
+	         });
+        };
+        (若有其他action，如decrement,则继续添加export const decrement=()={})
+2、Store
+   Store为存储组件状态的中心
+   <1>、每种组件拥有自己的store(从组件功能来区分)
+   <2>、组件的store对象持有自身初始状态，其内容的改变应通过消息机制（如事件的触发）来出发改变
+   <3>、所有action对象应该注册，即AppDispatcher.register(action)。register函数通过
+       action的type属性进行事件触发，返回一个组件的dispatchToken对象。
+3、view
+   view的内容为用户用户实际交互的页面，负责页面的显示以及用户操作的响应（具体事件触发，通过事件触发器工作
+   ，所以需要设置监听函数）。
+      
